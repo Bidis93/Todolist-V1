@@ -18,9 +18,9 @@ $connexion = getConnexion();
 
   if(isset($_POST['edit'])){
 
-    $titre = $_POST['titre'];
+    $titre = $_POST['title'];
     $tacheid = $_POST['edit'];
-    $description = $_POST['description'];
+    $description = $_POST['taskinfo'];
 
     $query = $connexion->prepare('UPDATE taches SET titre = :titre WHERE id = :id; UPDATE taches SET description = :description WHERE id = :id;');
     $query->bindParam(":titre", $titre);
@@ -31,7 +31,7 @@ $connexion = getConnexion();
 }
 
 function doSignout() {
-   session_start();
+
    $_SESSION = array();
    session_destroy();
 
@@ -40,7 +40,6 @@ function doSignout() {
 }
 
 function doConnexion() {
-   session_start();
 
   $connexion = getConnexion();
 
@@ -89,20 +88,23 @@ function doInscription() {
 }
 //selectionne les infos de la bdd
 function doSelect() {
-
+if(!isset($_SESSION['id'])){
+  return array();
+}
   $connexion = getConnexion();
-  $sql = $connexion->query('SELECT * FROM taches');
+  $sql = $connexion->prepare('SELECT * FROM taches WHERE userid = ?');
+  $sql->execute(array($_SESSION['id']));
 
-  return $sql;
+  return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
 function doCreation() {
 
   $connexion = getConnexion();
-  $query = $connexion->prepare('INSERT INTO taches (titre, description) VALUES (?,?)');
+  $query = $connexion->prepare('INSERT INTO taches (titre, description, userid) VALUES (?, ?, ?)');
   if(isset($_POST['titre'], $_POST['description'])) {
-  $query->execute(array($_POST['titre'], $_POST['description']));
+  $query->execute(array($_POST['titre'], $_POST['description'], $_SESSION['id']));
 
   return $query;
   }

@@ -6,8 +6,8 @@
 	 <li><?= $getSelection['description'] ?></li>
 	</ul>
 	<form action="" method="post">
-	<input value="<?= $getSelection['titre'] ?>" name="titre">
-	<input value="<?= $getSelection['description'] ?>" name="description">
+	<input value="<?= $getSelection['titre'] ?>" name="title">
+	<input value="<?= $getSelection['description'] ?>" name="taskinfo">
 	<button type="submit" value="<?= $getSelection['id']?>" name="edit">Modifier</button>
 	<button type="submit" value="<?= $getSelection['id']?>" name="supprimer">Supprimer</button>
 </form>

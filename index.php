@@ -1,19 +1,21 @@
 <?php
+session_start();
 
 require 'model.php';
 
-doDelete();
+doCreation();
 
 doEdit();
 
-doCreation();
+doDelete();
 
 try {
  $getSelect = doSelect();
- require 'view.php';
 }
  catch(Exception $e){
  $msg_erreur = $e->getMessage();
 }
+require 'view.php';
+
 require 'template.php';
 ?>

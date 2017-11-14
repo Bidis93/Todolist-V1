@@ -1,4 +1,5 @@
 <?php
+
 require 'model.php';
 
 doInscription();
